@@ -1,0 +1,60 @@
+
+How to run:
+============
+
+Prerequisties:
+OVS 2.10.0 +
+
+
+use ubuntu  20.04 or +, which comes OVS 2.13.
+Steps
+======
+1. Configure the input in params.conf
+
+
+2. Run the RYU Controller application
+
+ryu-manager  --config-file parameter.conf controller.py
+
+
+3. Run the Mininet topology and traffic
+
+sudo python3 traffic.py
+
+Traffic is automated in the traffic.py.
+change scenario=0,1, 2,3,4...8 to simulate different test scenarios.
+each test runs for (the duration of the streaming video + time to save pcapng and mp4 files) seconds.
+
+
+4. Verify the meter table and flow table
+
+sudo ovs-ofctl -O OpenFlow13 dump-flows s1
+sudo ovs-ofctl -O OpenFlow13 dump-flows s2
+sudo ovs-ofctl -O OpenFlow13 dump-flows s3
+sudo ovs-ofctl -O OpenFlow13 dump-flows s4
+sudo ovs-ofctl -O OpenFlow13 dump-flows s5
+sudo ovs-ofctl -O OpenFlow13 dump-flows s6
+
+sudo ovs-ofctl -O OpenFlow13 dump-meters s1
+sudo ovs-ofctl -O OpenFlow13 dump-meters s2
+sudo ovs-ofctl -O OpenFlow13 dump-meters s3
+sudo ovs-ofctl -O OpenFlow13 dump-meters s4
+sudo ovs-ofctl -O OpenFlow13 dump-meters s5
+sudo ovs-ofctl -O OpenFlow13 dump-meters s6
+
+
+6. Verify the meter statistics using below command
+
+sudo ovs-ofctl -O OpenFlow13 meter-stats s2
+sudo ovs-ofctl -O OpenFlow13 meter-stats s4
+
+7. draw the graphs Fig 4 and Fig 5 of the publication  for the 8 scenarios
+Adaptive QoS for data transfers using software-defined networking (DOI: 10.1109/ANTS.2016.7947874 Publisher: IEEE )
+002_AdaptiveQoSDataTransfertusingSDN.pdf
+
+
+
+
+
+
+
